@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUB Installment Calculator!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+    <div class="container">
+        <h1>Tuition Fee Calculator!</h1>
+        
+        <form id="installmentForm">
+            <label for="studentType">Your Type:</label>
+            <select id="studentType" name="studentType" required>
+                <option value="normal">Normal Student</option>
+                <option value="scholarship">Scholarship Student</option>
+            </select>
+            
+            <div id="scholarshipSection" class="hidden">
+                <label for="scholarshipPercentage">Select Scholarship Percentage:</label>
+                <select id="scholarshipPercentage" name="scholarshipPercentage">
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                    <option value="40">40%</option>
+                    <option value="50">50%</option>
+                    <option value="60">60%</option>
+                    <option value="70">70%</option>
+                    <option value="80">80%</option>
+                    <option value="90">90%</option>
+                    <option value="100">100%</option>
+                </select>
+            </div>
+            
+            <label for="totalAmount">Enter the total amount:</label>
+            <input type="number" id="totalAmount" name="totalAmount" required>
+            
+            <button type="submit">Calculate Installments</button>
+        </form>
+
+        <div id="result" class="hidden">
+            <h2>Installment Breakdown</h2>
+            <p>1st Installment (40%): <span id="firstInstallment"></span> Taka</p>
+            <p>2nd Installment (30%): <span id="secondInstallment"></span> Taka</p>
+            <p>3rd Installment (30%): <span id="thirdInstallment"></span> Taka</p>
+        </div>
+        <h3>Rakib-Hasan</h3>
+        
+        <a href="https://github.com/Rakib-Hasan-110" target="_blank">
+            <img src="images.png" alt="Rakib-Hasan" width="30" height="30"> 
+            </a>
+
+            <a href="https://www.linkedin.com/in/rakib-hasan110/" target="_blank">
+                <img src="linkedIn.png" alt="Rakib-Hasan" width="30" height="30"> 
+                </a>
+        
+    </div>
+
+    <script>
+        document.getElementById('studentType').addEventListener('change', function() {
+            const scholarshipSection = document.getElementById('scholarshipSection');
+            if (this.value === 'scholarship') {
+                scholarshipSection.classList.remove('hidden');
+            } else {
+                scholarshipSection.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('installmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const totalAmount = parseFloat(document.getElementById('totalAmount').value);
+            const studentType = document.getElementById('studentType').value;
+            let finalAmount = totalAmount;
+            
+            if (studentType === 'scholarship') {
+                const scholarshipPercentage = parseInt(document.getElementById('scholarshipPercentage').value);
+                finalAmount -= (totalAmount * (scholarshipPercentage / 100));
+            }
+            
+            const firstInstallment = finalAmount * 0.40;
+            const secondInstallment = finalAmount * 0.30;
+            const thirdInstallment = finalAmount * 0.30;
+            
+            document.getElementById('firstInstallment').textContent = firstInstallment.toFixed(2);
+            document.getElementById('secondInstallment').textContent = secondInstallment.toFixed(2);
+            document.getElementById('thirdInstallment').textContent = thirdInstallment.toFixed(2);
+            
+            document.getElementById('result').classList.remove('hidden');
+        });
+    </script>
+    
+</body>
+</html>
